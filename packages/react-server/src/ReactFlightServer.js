@@ -26,6 +26,7 @@ import {enableFlightReadableStream} from 'shared/ReactFeatureFlags';
 
 import {
   scheduleWork,
+  scheduleMicrotask,
   flushBuffered,
   beginWriting,
   writeChunkAndReturn,
@@ -1517,7 +1518,7 @@ function pingTask(request: Request, task: Task): void {
   pingedTasks.push(task);
   if (pingedTasks.length === 1) {
     request.flushScheduled = request.destination !== null;
-    scheduleWork(() => performWork(request));
+    scheduleMicrotask(() => performWork(request));
   }
 }
 

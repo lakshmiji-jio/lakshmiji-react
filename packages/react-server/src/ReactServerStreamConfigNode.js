@@ -22,6 +22,8 @@ export type PrecomputedChunk = Uint8Array;
 export opaque type Chunk = string;
 export type BinaryChunk = Uint8Array;
 
+export const scheduleMicrotask = queueMicrotask;
+
 export function scheduleWork(callback: () => void) {
   setImmediate(callback);
 }
