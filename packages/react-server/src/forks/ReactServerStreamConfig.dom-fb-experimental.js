@@ -43,7 +43,7 @@ export interface Destination {
 }
 
 export function scheduleWork(callback: () => void) {
-  callback();
+  setTimeout(callback, 0);
 }
 
 export function beginWriting(destination: Destination) {
