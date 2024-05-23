@@ -13,9 +13,18 @@ export type PrecomputedChunk = Uint8Array;
 export opaque type Chunk = Uint8Array;
 export type BinaryChunk = Uint8Array;
 
-export function scheduleWork(callback: () => void) {
-  callback();
-}
+const LocalMessageChannel =
+  typeof MessageChannel === 'function' ? MessageChannel : undefined;
+export const scheduleWork: (callback: () => void) => void =
+  LocalMessageChannel !== undefined
+    ? (callback: () => void) => {
+        const channel = new LocalMessageChannel();
+        channel.port1.onmessage = callback;
+        channel.port2.postMessage(undefined);
+      }
+    : (callback: () => void) => {
+        setTimeout(callback, 0);
+      };
 
 export function flushBuffered(destination: Destination) {
   // WHATWG Streams do not yet have a way to flush the underlying
