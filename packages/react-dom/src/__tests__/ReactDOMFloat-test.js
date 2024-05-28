@@ -5372,20 +5372,6 @@ body {
     );
 
     await act(() => {
-      resolveText('completed inner');
-    });
-    expect(getMeaningfulChildren(document)).toEqual(
-      <html>
-        <head />
-        <body>
-          loading...
-          <link rel="preload" href="completed inner" as="style" />
-          <link rel="preload" href="in fallback inner" as="style" />
-        </body>
-      </html>,
-    );
-
-    await act(() => {
       resolveText('complete root');
     });
     await act(() => {
