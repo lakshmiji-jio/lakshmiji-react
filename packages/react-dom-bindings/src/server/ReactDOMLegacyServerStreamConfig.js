@@ -16,6 +16,14 @@ export opaque type PrecomputedChunk = string;
 export opaque type Chunk = string;
 export opaque type BinaryChunk = string;
 
+export function scheduleMicrotask(callback: () => void) {
+  // While this defies the method name the legacy builds have special
+  // overrides that make work scheduling sync. At the moment scheduleMicrotask
+  // isn't used by any legacy APIs so this is somewhat academic but if they
+  // did in the future we'd probably want to have this be in sync with scheduleWork
+  callback();
+}
+
 export function scheduleWork(callback: () => void) {
   callback();
 }

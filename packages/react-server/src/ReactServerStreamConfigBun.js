@@ -21,8 +21,10 @@ export type PrecomputedChunk = string;
 export opaque type Chunk = string;
 export type BinaryChunk = $ArrayBufferView;
 
+export const scheduleMicrotask = queueMicrotask;
+
 export function scheduleWork(callback: () => void) {
-  callback();
+  setImmediate(callback);
 }
 
 export function flushBuffered(destination: Destination) {

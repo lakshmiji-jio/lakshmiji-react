@@ -42,8 +42,21 @@ export interface Destination {
   onError(error: mixed): void;
 }
 
+function handleErrorInNextTick(error: any) {
+  setTimeout(() => {
+    throw error;
+  });
+}
+
+export const scheduleMicrotask: (callback: () => void) => void =
+  typeof queueMicrotask === 'function'
+    ? queueMicrotask
+    : callback => {
+        Promise.resolve(null).then(callback).catch(handleErrorInNextTick);
+      };
+
 export function scheduleWork(callback: () => void) {
-  callback();
+  setTimeout(callback, 0);
 }
 
 export function beginWriting(destination: Destination) {
